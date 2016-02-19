@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  validates :type, inclusion: {:in => %w(Client)}
+
   def name
     first_name + " " + last_name
   end
