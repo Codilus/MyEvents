@@ -11,10 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160219125435) do
+ActiveRecord::Schema.define(version: 20160226133125) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "events", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.integer  "client_id",  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["client_id"], name: "index_events_on_client_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -41,4 +50,5 @@ ActiveRecord::Schema.define(version: 20160219125435) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true, using: :btree
 
+  add_foreign_key "events", "users", column: "client_id"
 end
