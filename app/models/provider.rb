@@ -1,2 +1,0 @@
-class Provider < User
-end

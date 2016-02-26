@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
 
   include DeviseTokenAuth::Concerns::User
 
-  validates :type, inclusion: {:in => %w(Client)}
+  validates :type, inclusion: {:in => %w(Client Promoter)}
   validates :first_name, presence: true
   validates :last_name, presence: true
 
