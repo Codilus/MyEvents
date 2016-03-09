@@ -1,6 +1,6 @@
 class OffersController < ActionController::Base
 
-	protect_from_forgery with: :null_session
+	protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 	respond_to :json
 
 	def index
@@ -8,7 +8,7 @@ class OffersController < ActionController::Base
 	end
 
 	def create
-		@offer = Offer.build(permitted_params)
+		@offer = Offer.new(permitted_params)
 
 		if @offer.save
 			render json: @offer
@@ -23,7 +23,7 @@ class OffersController < ActionController::Base
 
 	private
 	def permitted_params
-		params.permit(:event_id, :promoter_id)
+		params.fetch(:offer).permit(:event_id, :promoter_id)
 	end
 
 end
