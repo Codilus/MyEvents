@@ -20,7 +20,7 @@ class OffersController < ActionController::Base
 	end
 
 	def show
-		render json: Offer.find(params[:id])
+		@offer = Offer.find(params[:id])
 	end
 
 	private
