@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :client do
-    sequence(:first_name) { |n| "Promoter #{n}" }
+    sequence(:first_name) { |n| "Client #{n}" }
     sequence(:last_name) { |n| "Last Name" }
     password 123123123
 

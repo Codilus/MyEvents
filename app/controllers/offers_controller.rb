@@ -3,8 +3,10 @@ class OffersController < ActionController::Base
 	protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 	respond_to :json
 
+	has_scope :by_promoter_id
+
 	def index
-		@offers = Offer.all
+		@offers = apply_scopes(Offer).all
 	end
 
 	def create
