@@ -10,9 +10,19 @@ class OffersController < ActionController::Base
 	end
 
 	def create
-		@offer = Offer.new(permitted_params)
+		@offer = Offer.new(create_permitted_params)
 
 		if @offer.save
+			render json: @offer
+		else
+			# Show error message
+		end
+	end
+
+	def update
+		@offer = Offer.find(params[:id])
+
+		if @offer.update(update_permitted_params)
 			render json: @offer
 		else
 			# Show error message
@@ -24,8 +34,12 @@ class OffersController < ActionController::Base
 	end
 
 	private
-	def permitted_params
+	def create_permitted_params
 		params.fetch(:offer).permit(:event_id, :promoter_id)
+	end
+
+	def update_permitted_params
+		params.fetch(:offer).permit(:budget_price, :budget_description, :status)
 	end
 
 end
