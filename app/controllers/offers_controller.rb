@@ -4,6 +4,7 @@ class OffersController < ActionController::Base
 	respond_to :json
 
 	has_scope :by_promoter_id
+	has_scope :by_client_id
 
 	def index
 		@offers = apply_scopes(Offer).all
