@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   namespace :client do
     namespace :api, defaults: { format: 'json' } do
-      resources :events
+      resources :events, only: [:index, :create, :update, :show]
     end
   end
 

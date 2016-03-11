@@ -11,16 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160226135215) do
+ActiveRecord::Schema.define(version: 20160311112606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "events", force: :cascade do |t|
-    t.string   "name",       null: false
-    t.integer  "client_id",  null: false
+    t.string   "name",             null: false
+    t.integer  "client_id",        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "date"
+    t.text     "description"
+    t.integer  "number_of_guests"
   end
 
   add_index "events", ["client_id"], name: "index_events_on_client_id", using: :btree
