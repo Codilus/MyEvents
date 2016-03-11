@@ -5,7 +5,7 @@ class Offer < ActiveRecord::Base
   belongs_to :promoter
 
   scope :by_promoter_id, -> id do
-    includes(event: [:client]).where(event: Client.find(id).events)
+    includes(event: [:client]).where(promoter_id: id)
   end
 
   scope :by_client_id, -> id do
