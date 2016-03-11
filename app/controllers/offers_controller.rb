@@ -7,7 +7,7 @@ class OffersController < ActionController::Base
 	has_scope :by_client_id
 
 	def index
-		@offers = apply_scopes(Offer)
+		@offers = apply_scopes(Offer).all
 	end
 
 	def create

@@ -5,11 +5,11 @@ class Offer < ActiveRecord::Base
   belongs_to :promoter
 
   scope :by_promoter_id, -> id do
-    includes(event: [:client]).where(promoter_id: id)
+    includes(event: [:client]).where(event: Client.find(id).events)
   end
 
   scope :by_client_id, -> id do
-    Client.find(id).events.map { |event| event.offers }.flatten
+    includes(event: [:client]).where(event: Client.find(id).events)
   end
 
   validates :event, presence: true
