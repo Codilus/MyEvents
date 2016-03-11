@@ -7,7 +7,7 @@ class OffersController < ActionController::Base
 	has_scope :by_client_id
 
 	def index
-		@offers = apply_scopes(Offer).all
+		@offers = apply_scopes(Offer)
 	end
 
 	def create
@@ -30,6 +30,16 @@ class OffersController < ActionController::Base
 		end
 	end
 
+	def update_budget
+		@offer = Offer.find(params[:id])
+
+		if @offer.update_budget(update_budget_permitted_params)
+			render json: @offer
+		else
+			# Show error message
+		end
+	end
+
 	def show
 		@offer = Offer.find(params[:id])
 	end
@@ -39,8 +49,8 @@ class OffersController < ActionController::Base
 		params.fetch(:offer).permit(:event_id, :promoter_id)
 	end
 
-	def update_permitted_params
-		params.fetch(:offer).permit(:budget_price, :budget_description, :status)
+	def update_budget_permitted_params
+		params.fetch(:offer).permit(:budget_price, :budget_description)
 	end
 
 end
