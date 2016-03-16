@@ -5,6 +5,7 @@ class OffersController < ActionController::Base
 
 	has_scope :by_promoter_id
 	has_scope :by_client_id
+	has_scope :by_event_id
 
 	def index
 		@offers = apply_scopes(Offer).all
@@ -12,7 +13,7 @@ class OffersController < ActionController::Base
 
 	def create
 		@offer = Offer.new(create_permitted_params)
-
+		# Get the event and promoter by id, then save
 		if @offer.save
 			render json: @offer
 		else

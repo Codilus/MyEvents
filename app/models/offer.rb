@@ -12,11 +12,13 @@ class Offer < ActiveRecord::Base
     includes(event: [:client]).where(event: Client.find(id).events)
   end
 
+  scope :by_event_id, -> id { includes(event: [:client]).where(event_id: id) }
+
   validates :event, presence: true
   validates :promoter, presence: true
   validates :status, inclusion: { in: VALID_STATUS }
 
-  def initialize(attributes=nil)
+  def initialize(attributes={})
     attr_with_defaults = { status: "PENDING_BUDGET" }.merge(attributes)
     super(attr_with_defaults)
   end
