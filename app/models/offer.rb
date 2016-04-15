@@ -1,4 +1,8 @@
 class Offer < ActiveRecord::Base
+  DEFAULT_VALUES = {
+    status: "PENDING_BUDGET"
+  }
+
   VALID_STATUS = %w(PENDING_BUDGET PENDING_CONFIRMATION REFUSED CONFIRMED FINISHED)
 
   belongs_to :event
@@ -19,7 +23,7 @@ class Offer < ActiveRecord::Base
   validates :status, inclusion: { in: VALID_STATUS }
 
   def initialize(attributes={})
-    attr_with_defaults = { status: "PENDING_BUDGET" }.merge(attributes)
+    attr_with_defaults = DEFAULT_VALUES.merge(attributes)
     super(attr_with_defaults)
   end
 

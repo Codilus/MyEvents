@@ -28,12 +28,12 @@ ActiveRecord::Schema.define(version: 20160415020802) do
   create_table "offers", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "promoter_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "status"
     t.decimal  "budget_price"
     t.text     "budget_description"
-    t.integer  "budget_counter"
+    t.integer  "budget_counter",     default: 0
   end
 
   add_index "offers", ["event_id"], name: "index_offers_on_event_id", using: :btree
