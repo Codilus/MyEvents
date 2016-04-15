@@ -42,4 +42,12 @@ class Offer < ActiveRecord::Base
     self.save!
   end
 
+  def increase_client_process
+    self.client_process_counter += 1
+  end
+
+  def increase_promoter_process
+    self.promoter_process_counter += 1
+  end
+
 end

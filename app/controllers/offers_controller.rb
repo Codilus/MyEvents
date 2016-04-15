@@ -16,6 +16,8 @@ class OffersController < ActionController::Base
 		promoter = Promoter.find(create_permitted_params[:promoter_id])
 		@offer = Offer.new(event: event, promoter: promoter)
 
+		@offer.increase_client_process
+
 		if @offer.save
 			render json: @offer
 		else
@@ -25,6 +27,8 @@ class OffersController < ActionController::Base
 
 	def update_budget
 		@offer = Offer.find(params[:id])
+
+		@offer.increase_promoter_process
 
 		if @offer.update_budget(update_budget_permitted_params)
 			render json: @offer
@@ -40,6 +44,7 @@ class OffersController < ActionController::Base
 	def accept_budget
 		begin
 			@offer = Offer.find(params[:id])
+			@offer.increase_client_process
 			@offer.accept_budget!
 			render json: @offer
 		rescue => e
@@ -50,6 +55,7 @@ class OffersController < ActionController::Base
 	def refuse_budget
 		begin
 			@offer = Offer.find(params[:id])
+			@offer.increase_client_process
 			@offer.refuse_budget!
 			render json: @offer
 		rescue => e
