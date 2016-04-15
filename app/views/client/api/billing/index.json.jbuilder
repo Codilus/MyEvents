@@ -4,4 +4,6 @@ json.offers_counter @client_billing_calculator.offers_counter
 json.offers_bill @client_billing_calculator.offers_bill
 json.events_bill @client_billing_calculator.events_bill
 json.total_usage_in_hours @client_billing_calculator.total_usage_in_hours
+json.process_usage_count @client_billing_calculator.process_usage_count
+json.process_usage_bill @client_billing_calculator.process_usage_bill
 json.account_created_at current_user.created_at

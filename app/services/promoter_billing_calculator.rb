@@ -34,12 +34,27 @@ class PromoterBillingCalculator
     @events_bill ||= EVENT_FEE * events_counter
   end
 
+  def process_usage_count
+    return @process_usage_count if @process_usage_count
+    usage = @promoter.get_usage(@month, @year)
+
+    @process_usage_count = usage.process_usage if usage
+    @process_usage_count = 0 unless usage
+
+    @process_usage_count
+  end
+
+  def process_usage_bill
+    @process_usage_bill ||= process_usage_count * PROCESS_FEE
+  end
+
   private
 
   def calculate
     total = MONTH_FEE
     total += events_bill
     total += offers_bill
+    total += process_usage_bill
 
     total
   end

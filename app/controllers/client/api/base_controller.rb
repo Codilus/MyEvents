@@ -1,19 +1,9 @@
 class Client::Api::BaseController < Client::BaseController
-  # respond_to :json
-  # after_action :verify_authorized
-  # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  after_action :count_process_client
 
   private
 
-  # def current_laboratory
-  #   current_operator.laboratory
-  # end
-  #
-  # def pundit_user
-  #   current_operator
-  # end
-  #
-  # def user_not_authorized
-  #   render json: { error: 'You are not authorized to perform this action' }, status: :unauthorized
-  # end
+  def count_process_client
+    current_user.current_usage.increment_usage!
+  end
 end

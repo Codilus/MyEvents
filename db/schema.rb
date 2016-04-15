@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160311112606) do
+ActiveRecord::Schema.define(version: 20160415135336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20160311112606) do
 
   add_index "offers", ["event_id"], name: "index_offers_on_event_id", using: :btree
   add_index "offers", ["promoter_id"], name: "index_offers_on_promoter_id", using: :btree
+
+  create_table "user_usages", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "process_usage", default: 0, null: false
+    t.integer "month",                     null: false
+    t.integer "year",                      null: false
+  end
+
+  add_index "user_usages", ["user_id"], name: "index_user_usages_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider",               default: "email", null: false
@@ -66,4 +75,5 @@ ActiveRecord::Schema.define(version: 20160311112606) do
   add_foreign_key "events", "users", column: "client_id"
   add_foreign_key "offers", "events"
   add_foreign_key "offers", "users", column: "promoter_id"
+  add_foreign_key "user_usages", "users"
 end

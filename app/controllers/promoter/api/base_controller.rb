@@ -1,6 +1,6 @@
 class Promoter::Api::BaseController < Promoter::BaseController
   # respond_to :json
-  # after_action :verify_authorized
+  after_action :count_process_promoter
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   private
@@ -13,7 +13,8 @@ class Promoter::Api::BaseController < Promoter::BaseController
   #   current_operator
   # end
   #
-  # def user_not_authorized
-  #   render json: { error: 'You are not authorized to perform this action' }, status: :unauthorized
-  # end
+
+  def count_process_promoter
+    current_user.current_usage.increment_usage!
+  end
 end
