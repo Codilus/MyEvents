@@ -23,13 +23,18 @@ class Offer < ActiveRecord::Base
     super(attr_with_defaults)
   end
 
-  def pend_confirmation
-    self.status = 'PENDING_CONFIRMATION'
+  def update_budget data
+    update(data.merge(status: 'PENDING_CONFIRMATION'))
   end
 
-  def update_budget data
-    pend_confirmation
-    update(data)
+  def accept_budget!
+    self.status = 'CONFIRMED'
+    self.save!
+  end
+
+  def refuse_budget!
+    self.status = 'REFUSED'
+    self.save!
   end
 
 end

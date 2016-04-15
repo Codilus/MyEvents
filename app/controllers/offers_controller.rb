@@ -12,22 +12,14 @@ class OffersController < ActionController::Base
 	end
 
 	def create
-		@offer = Offer.new(create_permitted_params)
-		# Get the event and promoter by id, then save
+		event = Event.find(create_permitted_params[:event_id])
+		promoter = Promoter.find(create_permitted_params[:promoter_id])
+		@offer = Offer.new(event: event, promoter: promoter)
+
 		if @offer.save
 			render json: @offer
 		else
-			# Show error message
-		end
-	end
-
-	def update
-		@offer = Offer.find(params[:id])
-
-		if @offer.update(update_permitted_params)
-			render json: @offer
-		else
-			# Show error message
+			render_error_message "Não foi possível solicitar o orçamento"
 		end
 	end
 
@@ -37,12 +29,32 @@ class OffersController < ActionController::Base
 		if @offer.update_budget(update_budget_permitted_params)
 			render json: @offer
 		else
-			# Show error message
+			render_error_message "Não foi possível criar o orçamento"
 		end
 	end
 
 	def show
 		@offer = Offer.find(params[:id])
+	end
+
+	def accept_budget
+		begin
+			@offer = Offer.find(params[:id])
+			@offer.accept_budget!
+			render json: @offer
+		rescue => e
+			render_error_message "Não foi possível aceitar o orçamento"
+		end
+	end
+
+	def refuse_budget
+		begin
+			@offer = Offer.find(params[:id])
+			@offer.refuse_budget!
+			render json: @offer
+		rescue => e
+			render_error_message "Não foi possível recusar o orçamento"
+		end
 	end
 
 	private
@@ -52,6 +64,10 @@ class OffersController < ActionController::Base
 
 	def update_budget_permitted_params
 		params.fetch(:offer).permit(:budget_price, :budget_description)
+	end
+
+	def render_error_message message
+		render json: { message: message }, status: 400
 	end
 
 end
