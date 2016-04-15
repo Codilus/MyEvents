@@ -28,7 +28,8 @@ class Offer < ActiveRecord::Base
   end
 
   def update_budget data
-    update(data.merge(status: 'PENDING_CONFIRMATION'))
+    update(data.merge(status: 'PENDING_CONFIRMATION',
+                      budget_counter: self.budget_counter + 1))
   end
 
   def accept_budget!
