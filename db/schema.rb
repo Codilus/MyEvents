@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160415135336) do
+ActiveRecord::Schema.define(version: 20160420192843) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,10 +39,12 @@ ActiveRecord::Schema.define(version: 20160415135336) do
   add_index "offers", ["promoter_id"], name: "index_offers_on_promoter_id", using: :btree
 
   create_table "user_usages", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "process_usage", default: 0, null: false
-    t.integer "month",                     null: false
-    t.integer "year",                      null: false
+    t.integer  "user_id"
+    t.integer  "process_usage",     default: 0, null: false
+    t.integer  "month",                         null: false
+    t.integer  "year",                          null: false
+    t.datetime "last_sync_at"
+    t.integer  "last_sync_process", default: 0
   end
 
   add_index "user_usages", ["user_id"], name: "index_user_usages_on_user_id", using: :btree

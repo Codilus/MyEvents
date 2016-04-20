@@ -12,6 +12,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'devise'
 gem 'devise_token_auth'
 gem 'rack-cors', :require => 'rack/cors'
+gem "http"
 
 group :development, :test do
   gem 'byebug'
